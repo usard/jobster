@@ -1,0 +1,11 @@
+:root {
+  --fluid-width: 80vw;
+  --max-width: 1120px;
+  --nav-height: 60px;
+}
+
+.container {
+  width: var(--fluid-width);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
