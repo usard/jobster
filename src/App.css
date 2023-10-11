@@ -9,3 +9,16 @@
   max-width: var(--max-width);
   margin: 0 auto;
 }
+
+button {
+  cursor: pointer;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 6px 10px;
+  background-color: rgb(78, 160, 228);
+  border: transparent;
+  border-radius: 2px;
+  color: whitesmoke;
+}

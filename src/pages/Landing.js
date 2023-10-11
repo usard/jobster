@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/images/logo.svg";
-import main from "../assets/images/main.svg";
+import { Link } from "react-router-dom";
 
+import main from "../assets/images/main.svg";
+import { Logo } from "../components";
 const Landing = () => {
   return (
     <Wrapper>
-      <nav>
-        <img src={logo} alt="" />
-      </nav>
+      <nav>{<Logo />}</nav>
       <div className="page container">
-        <article>
+        <div className="article">
           <h1>Job Tracking App</h1>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla
@@ -18,8 +17,10 @@ const Landing = () => {
             temporibus atque earum. Eos accusantium laborum, expedita itaque
             deserunt totam corrupti!.
           </p>
-          <button>Login/Register</button>
-        </article>
+          <Link to="/" className="btn">
+            Login/Register
+          </Link>
+        </div>
         <img src={main} alt="" />
       </div>
     </Wrapper>
@@ -38,8 +39,34 @@ const Wrapper = styled.main`
     align-items: center;
   }
   .page {
-    display: flex;
+    display: grid;
     min-height: calc(100vh - var(--nav-height));
-    align-items: center;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .main-logo {
+      display: none;
+    }
+    p {
+      line-height: 1.5rem;
+      letter-spacing: 0.5px;
+      color: grey;
+    }
+  }
+  @media (min-width: 992px) {
+    .page {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+
+      .article {
+        margin-top: -7rem;
+      }
+      img {
+        display: block;
+      }
+    }
   }
 `;
