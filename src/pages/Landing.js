@@ -17,7 +17,7 @@ const Landing = () => {
             temporibus atque earum. Eos accusantium laborum, expedita itaque
             deserunt totam corrupti!.
           </p>
-          <Link to="/" className="btn">
+          <Link to="/register" className="btn">
             Login/Register
           </Link>
         </div>

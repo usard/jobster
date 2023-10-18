@@ -1,24 +1,55 @@
-import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Logo, FormRow } from "../components";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
-const Register = () => {
-  const [credentials, setCredentials] = useState();
-  const [isMember, setIsMember] = useState(true);
+import { useDispatch, useSelector } from "react-redux";
+import { Logo, FormRow } from "../components";
+import { loginUser, registerUser } from "../features/User/userSlice"; // actions
+
+export const Register = () => {
+  const [isMember, setIsMember] = useState(false);
+  const nameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const nameRef = useRef(null);
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.user.userData);
+  useEffect(() => {
+    if (userData) {
+      console.log(userData);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    }
+  }, [userData]);
+  const dispatch = useDispatch();
   const toggleMember = () => {
     setIsMember(() => !isMember);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(
-      "submitted values :",
-      nameRef.current.value,
-      emailRef.current.value,
-      passwordRef.current.value
-    );
+    toast.success("entered credentials");
+    console.log(emailRef.current.value);
+    console.log(passwordRef.current.value);
+
+    // console.log(nameRef.current.value); //
+    if (isMember) {
+      console.log("login invoked", isMember);
+      dispatch(
+        loginUser({
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
+    } else {
+      console.log("register invoked", isMember);
+      dispatch(
+        registerUser({
+          name: nameRef.current.value,
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
+    }
   };
   return (
     <Wrapper>
@@ -28,11 +59,11 @@ const Register = () => {
           <Logo></Logo>
           <h1>{isMember ? "Login" : "Register"}</h1>
           {!isMember && (
-            <FormRow type="text" name="name" ref={nameRef}></FormRow>
+            <FormRow type="text" name="name" iref={nameRef}></FormRow>
           )}
 
-          <FormRow type="email" name="email" ref={emailRef}></FormRow>
-          <FormRow type="password" name="password" ref={passwordRef}></FormRow>
+          <FormRow type="email" name="email" iref={emailRef}></FormRow>
+          <FormRow type="password" name="password" iref={passwordRef}></FormRow>
 
           <button type="submit" className="hero-btn">
             submit

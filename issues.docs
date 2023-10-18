@@ -1,0 +1,1 @@
+never console.log() null values refs in the component it will give the error 'cannot read properites of null'

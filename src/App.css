@@ -3,6 +3,14 @@
   --max-width: 1120px;
   --nav-height: 60px;
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+}
 
 .container {
   width: var(--fluid-width);
@@ -21,4 +29,10 @@ button {
   border: transparent;
   border-radius: 2px;
   color: whitesmoke;
+}
+
+.page-center {
+  margin: 0 auto;
+  height: calc(100vh - 57px);
+  background-color: rgba(236, 231, 242, 0.8);
 }
