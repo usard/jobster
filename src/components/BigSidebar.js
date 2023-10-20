@@ -33,10 +33,9 @@ const BigSidebar = () => {
 export default BigSidebar;
 
 const Wrapper = styled.aside`
-  // .hide-sidebar {
-  //   display: none;
-  //   transition: 1s;
-  // }
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
   width: 270px;
   height: 100vh;
   border: 1px solid grey;

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { BigSidebar, Navbar } from "../../components";
+import { BigSidebar, Navbar, SmallSidebar } from "../../components";
 import styled from "styled-components";
 // import Wrapper from "../../assets/wrappers/SharedLayout";
 
 const SharedLayout = () => {
   const [showSidebar, setShowSidebar] = useState(true);
+  const [isSmallSidebarOpen, setIsSmallSidebarOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleSidebar = () => {
     setShowSidebar(!showSidebar);
+    setIsSmallSidebarOpen(!isSmallSidebarOpen);
   };
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -16,8 +18,12 @@ const SharedLayout = () => {
   return (
     <Wrapper>
       <main>
-        <div className={showSidebar ? "default-layout" : null}>
-          {showSidebar && <BigSidebar />}
+        {isSmallSidebarOpen && <SmallSidebar handleSidebar={handleSidebar} />}
+        <div
+          className={showSidebar ? "default-layout smallscreen-layout" : null}
+        >
+          {showSidebar && <BigSidebar className="bigsidebar" />}
+
           {/* <BigSidebar className={showSidebar ? null : "hide-sidebar"} /> */}
           <div id="dashboard-page">
             <Navbar
@@ -48,5 +54,10 @@ const Wrapper = styled.div`
   #dashboard-page {
     width: 95%;
     margin: 0 auto;
+  }
+  @media screen and (max-width: 900px) {
+    .default-layout {
+      display: block;
+    }
   }
 `;
