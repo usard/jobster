@@ -2,6 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import customAxios from "../../utils/axios";
 import { toast } from "react-toastify";
 
+export const updateUserLocalStorage = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
+};
 export const addUserToLocalStorage = (user) => {
   localStorage.setItem("user", JSON.stringify(user));
 };
@@ -36,6 +39,7 @@ export const loginUser = createAsyncThunk(
     try {
       console.log("logged in user :", user);
       const data = user;
+      // console.log("data in thunk for login :", user);
       const response = await customAxios.post("/auth/login", data);
       return response.data;
     } catch (error) {
@@ -43,17 +47,36 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
   try {
     const response = await customAxios.post("/auth/logout");
   } catch (error) {}
 });
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (user, thunkAPI) => {
+    const data = user;
+    console.log("data dispatched :", data);
+    try {
+      const response = await customAxios.patch("/auth/updateUser", data);
+      return response.data;
+    } catch (error) {
+      // return error.response.data.msg;
+      if ((error.response.data.status = 401)) {
+        return thunkAPI.rejectWithValue("UnAuthorized, Logging out...");
+      }
+      return thunkAPI.rejectWithValue(error.reponse.data.msg);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
     isLoading: false,
     userData: getUserFromLocalStorage(),
   },
+
   reducers: {
     // login: (state) => {},
     // register: (state) => {},
@@ -91,6 +114,7 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
+        console.log("payload on login :", payload);
         state.isLoading = false;
         console.log("payload :", payload);
         const { user } = payload;
@@ -106,11 +130,24 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.isLoading = false;
-        state.user = [];
+        // state.user = [];
       })
       .addCase(logoutUser.rejected, (state) => {
         state.isLoading = false;
         console.log("logout rejected");
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        const { user } = payload;
+        console.log("user fulfilled :", payload);
+        state.userData = user;
+        updateUserLocalStorage(user);
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });

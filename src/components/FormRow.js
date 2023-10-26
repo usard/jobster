@@ -1,12 +1,19 @@
 import React from "react";
 
-const FormRow = ({ type, name, iref }) => {
+const FormRow = ({ labelText, type, name, value, handleChange }) => {
   return (
     <div className="form-row">
-      <label htmlFor="" className="form-label">
-        {name}
+      <label htmlFor={name} className="form-label">
+        {labelText || name}
       </label>
-      <input type={type} name={name} ref={iref} className="form-input" />
+      <input
+        type={type}
+        name={name}
+        value={value}
+        // onChange={(event) => handleChange(name, event)}
+        onChange={handleChange}
+        className="form-input"
+      />
     </div>
   );
 };
