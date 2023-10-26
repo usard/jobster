@@ -31,7 +31,7 @@ const SharedLayout = () => {
               toggleDropdown={toggleDropdown}
               isDropdownOpen={isDropdownOpen}
             />
-            <div>
+            <div className="page-center">
               <Outlet />
             </div>
           </div>
