@@ -32,6 +32,10 @@ button {
 }
 
 .page-center {
+  /* width: calc(100vw-300px); */
+  padding: 1rem;
+  border: 1px solid grey;
+  border-radius: 3px;
   margin: 0 auto;
   height: calc(100vh - 57px);
   background-color: rgba(236, 231, 242, 0.8);

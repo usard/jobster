@@ -8,10 +8,13 @@ import { loginUser, registerUser } from "../features/User/userSlice"; // actions
 
 export const Register = () => {
   const [isMember, setIsMember] = useState(false);
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const initialState = {
+    name: "",
+    password: "",
+    email: "",
+  };
   const navigate = useNavigate();
+  const [values, setValues] = useState(initialState);
   const userData = useSelector((state) => state.user.userData);
   useEffect(() => {
     if (userData) {
@@ -25,28 +28,29 @@ export const Register = () => {
   const toggleMember = () => {
     setIsMember(() => !isMember);
   };
+  const handleChange = (name, event) => {
+    setValues({ ...values, [name]: event.target.value });
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     toast.success("entered credentials");
-    console.log(emailRef.current.value);
-    console.log(passwordRef.current.value);
 
     // console.log(nameRef.current.value); //
     if (isMember) {
       console.log("login invoked", isMember);
       dispatch(
         loginUser({
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
+          email: values.email,
+          password: values.password,
         })
       );
     } else {
       console.log("register invoked", isMember);
       dispatch(
         registerUser({
-          name: nameRef.current.value,
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
+          name: values.name,
+          email: values.email,
+          password: values.password,
         })
       );
     }
@@ -59,11 +63,26 @@ export const Register = () => {
           <Logo></Logo>
           <h1>{isMember ? "Login" : "Register"}</h1>
           {!isMember && (
-            <FormRow type="text" name="name" iref={nameRef}></FormRow>
+            <FormRow
+              type="text"
+              name="name"
+              value={values.name}
+              handleChange={handleChange}
+            ></FormRow>
           )}
 
-          <FormRow type="email" name="email" iref={emailRef}></FormRow>
-          <FormRow type="password" name="password" iref={passwordRef}></FormRow>
+          <FormRow
+            type="email"
+            name="email"
+            value={values.email}
+            handleChange={handleChange}
+          ></FormRow>
+          <FormRow
+            type="password"
+            name="password"
+            value={values.password}
+            handleChange={handleChange}
+          ></FormRow>
 
           <button type="submit" className="hero-btn">
             submit
