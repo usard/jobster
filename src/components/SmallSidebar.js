@@ -33,7 +33,7 @@ const SmallSidebar = ({ handleSidebar }) => {
       <div>
         <Logo position="center" />
         <div className="nav-center">
-          <NavLinks data={data} />
+          <NavLinks toggleSidebar={handleSidebar} data={data} />
         </div>
       </div>
     </Wrapper>

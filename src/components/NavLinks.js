@@ -2,13 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-const NavLinks = ({ data }) => {
+const NavLinks = ({ data, toggleSidebar }) => {
   return (
     <Wrapper className="nav-links">
       {data.map((item) => {
         const { id, icon, name, path } = item;
         return (
-          <NavLink className="link" key={id} to={path}>
+          <NavLink className="link" onClick={toggleSidebar} key={id} to={path}>
             <span>{icon}</span> {name}
           </NavLink>
         );

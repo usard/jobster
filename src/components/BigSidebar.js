@@ -33,6 +33,12 @@ const BigSidebar = () => {
 export default BigSidebar;
 
 const Wrapper = styled.aside`
+  // position: fixed;
+  // left: 0;
+  // bottom: 0;
+  // top: 0;
+
+  z-index: 100;
   @media screen and (max-width: 900px) {
     display: none;
   }
@@ -41,6 +47,7 @@ const Wrapper = styled.aside`
   border: 1px solid grey;
   border-radius: 3px;
   .sidebar-container {
+    display: block;
     width: 90%;
     margin: 0 auto;
     padding: 2rem 0;
