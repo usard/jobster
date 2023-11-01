@@ -11,7 +11,7 @@ const FormRow = ({ labelText, type, name, value, handleChange }) => {
         name={name}
         value={value}
         // onChange={(event) => handleChange(name, event)}
-        onChange={handleChange}
+        onChange={(event) => handleChange(event)}
         className="form-input"
       />
     </div>

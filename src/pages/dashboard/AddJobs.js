@@ -6,6 +6,7 @@ import { newJob, clearJob, handleInput } from "../../features/Job/jobSlice";
 import { FormRow, FormRowSelect } from "../../components";
 
 const AddJobs = () => {
+  console.log("render in add jobs");
   const dispatch = useDispatch();
   const job = useSelector((store) => store.job);
   const {

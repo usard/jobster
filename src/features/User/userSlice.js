@@ -47,11 +47,17 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
-  try {
-    const response = await customAxios.post("/auth/logout");
-  } catch (error) {}
-});
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (thunkAPI) => {
+    try {
+      const response = await customAxios.post("/auth/logout");
+      // if(rep)
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user, thunkAPI) => {

@@ -8,6 +8,23 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* ::-webkit-scrollbar {
+  margin: 0.1rem;
+  width: 10px;
+}
+
+ 
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 5px;
+} */
+
 body {
   height: 100vh;
 }

@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import customAxios from "../../utils/axios";
+import { toast } from "react-toastify";
+import { showLoading, hideLoading, findJobs } from "../Search/searchJobSlice";
 
 export const newJob = createAsyncThunk("job/newJob", async (job, thunkAPI) => {
   try {
@@ -12,6 +14,22 @@ export const newJob = createAsyncThunk("job/newJob", async (job, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data.msg);
   }
 });
+
+export const deleteJob = createAsyncThunk(
+  "job/deleteJob",
+  async (jobID, thunkAPI) => {
+    thunkAPI.dispatch(showLoading());
+    try {
+      const response = await customAxios.delete(`/jobs/${jobID}`);
+      thunkAPI.dispatch(findJobs());
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.config);
+      thunkAPI.dispatch(hideLoading());
+      return thunkAPI.rejectWithValue(error.response.data.config);
+    }
+  }
+);
 
 const jobSlice = createSlice({
   // name: "job",
@@ -38,6 +56,7 @@ const jobSlice = createSlice({
     status: "pending",
     isEditing: false,
     editJobId: "",
+    isError: null,
   },
   reducers: {
     handleInput: (state, { payload }) => {
@@ -64,6 +83,16 @@ const jobSlice = createSlice({
         state.jobData = job;
       })
       .addCase(newJob.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deleteJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteJob.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        console.log("deleteJob :", payload);
+      })
+      .addCase(deleteJob.rejected, (state, { payload }) => {
         state.isLoading = false;
       });
   },

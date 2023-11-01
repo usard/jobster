@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const FormRowSelect = ({ name, value, options, labelText, handleChange }) => {
+  // console.log(" options :", name, value, options, labelText);
   return (
     <div className="form-row">
       <label className="form-label" htmlFor={name}>

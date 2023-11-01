@@ -28,8 +28,9 @@ export const Register = () => {
   const toggleMember = () => {
     setIsMember(() => !isMember);
   };
-  const handleChange = (name, event) => {
-    setValues({ ...values, [name]: event.target.value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
