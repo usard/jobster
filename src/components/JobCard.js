@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { useDispatch } from "react-redux";
-import { deleteJob } from "../features/Job/jobSlice";
-import { showLoading, hideLoading } from "../features/Search/searchJobSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changePageToEdit,
+  deleteJob,
+  setJobId,
+} from "../features/Job/jobSlice";
+import { Link } from "react-router-dom";
+// import { showLoading, hideLoading } from "../features/Search/searchJobSlice";
 
 const JobCard = ({
   _id: jobID,
@@ -13,11 +18,18 @@ const JobCard = ({
   jobType,
   status,
 }) => {
+  // const { isEditing } = useSelector((store) => store.job);
   const dispatch = useDispatch();
   const handleDelete = (jobID) => {
     dispatch(deleteJob(jobID));
   };
+  // const handleEdit = (job_id) => {
+  //   dispatch(changePageToEdit(job_id));
+  // };
   console.log("card :", company, position);
+  // if (isEditing) {
+  //   return <Navigate to="/dashboard/add-jobs" />;
+  // }
   return (
     <Wrapper className="card jobcard">
       <header>
@@ -45,9 +57,33 @@ const JobCard = ({
           <span>{status}</span>
         </div>
         <div className="btn-container">
-          <button type="button" className="btn">
+          {/* <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              handleEdit(jobID);
+            }}
+          >
             Edit
-          </button>
+          </button> */}
+          <Link
+            to="/dashboard/add-jobs"
+            onClick={() => {
+              dispatch(
+                setJobId({
+                  editJobId: jobID,
+                  position,
+                  company,
+                  jobLocation,
+                  status,
+                  jobType,
+                })
+              );
+            }}
+            className="btn"
+          >
+            Edit
+          </Link>
           <button
             type="button"
             className="btn"
