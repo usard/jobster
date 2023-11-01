@@ -1,13 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { newJob, clearJob, handleInput } from "../../features/Job/jobSlice";
+import {
+  newJob,
+  clearJob,
+  handleInput,
+  editJob,
+} from "../../features/Job/jobSlice";
 
 import { FormRow, FormRowSelect } from "../../components";
 
 const AddJobs = () => {
   console.log("render in add jobs");
   const dispatch = useDispatch();
+  console.log(
+    "job slice in add job :",
+    useSelector((store) => store.job)
+  );
   const job = useSelector((store) => store.job);
   const {
     position,
@@ -17,25 +26,28 @@ const AddJobs = () => {
     statusOptions,
     status,
     jobType,
+    editJobId,
   } = job;
+  console.log("editJobId :", editJobId);
   const handleChange = (event) => {
     const { name, value } = event.target;
     console.log("selected name value :", name, "   ", value);
     dispatch(handleInput({ name, value }));
   };
-  console.log(
-    "job store :",
-    useSelector((store) => store.job)
-  );
+
   return (
     <Wrapper>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          dispatch(newJob(job));
+          if (!editJobId) {
+            dispatch(newJob(job));
+          } else {
+            dispatch(editJob({ editJobId }));
+          }
         }}
       >
-        <h1>Add Job</h1>
+        <h1>{!editJobId ? "Add Job" : "Edit Job"}</h1>
         <div className="form-rows-container">
           <FormRow
             id="1"
@@ -87,7 +99,7 @@ const AddJobs = () => {
             clear
           </button>
           <button type="submit" className="btn act-btn">
-            Add job
+            {!editJobId ? "Add job" : "Edit Job"}
           </button>
         </div>
       </form>
