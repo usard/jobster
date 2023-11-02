@@ -88,6 +88,20 @@ export const Register = () => {
           <button type="submit" className="hero-btn">
             submit
           </button>
+          <button
+            type="button"
+            onClick={() =>
+              dispatch(
+                loginUser({
+                  email: "testUser@test.com",
+                  password: "secret",
+                })
+              )
+            }
+            className="hero-btn"
+          >
+            Demo App
+          </button>
         </form>
         <p>
           {isMember ? (
