@@ -14,8 +14,9 @@ const SearchContainer = () => {
     jobTypeOptions,
     statusOptions,
     sort,
-    page,
+    // page,
     sortOptions,
+    // numOfPages,
   } = search;
 
   const handleChange = (event) => {

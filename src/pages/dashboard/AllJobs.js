@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { SearchContainer, JobsContainer } from "../../components";
+import {
+  SearchContainer,
+  JobsContainer,
+  PageBtnContainer,
+} from "../../components";
 // import { useSelector, useDispatch } from "react-redux";
 import { findJobs, handleInput } from "../../features/Search/searchJobSlice";
 
@@ -10,6 +14,7 @@ const AllJobs = () => {
     <Wrapper>
       <SearchContainer></SearchContainer>
       <JobsContainer></JobsContainer>
+      <PageBtnContainer></PageBtnContainer>
     </Wrapper>
   );
 };

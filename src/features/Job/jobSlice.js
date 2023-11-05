@@ -38,7 +38,6 @@ export const editJob = createAsyncThunk(
     const data = thunkAPI.getState().job;
     // console.log()
     const { editJobId: jobID } = job;
-
     console.log("updted data for server :", data);
     try {
       const response = await customAxios.patch(`/jobs/${jobID}`, data);
@@ -51,18 +50,6 @@ export const editJob = createAsyncThunk(
 );
 
 const jobSlice = createSlice({
-  // name: "job",
-  // initialState: {
-  //   isLoading: false,
-  //   name: "",
-  //   position: "",
-  //   jobLocation: "",
-  //   jobType: "",
-  //   jobTypeOptions: ["partime", "fulltime"],
-  //   company: "",
-  //   status: "",
-  //   statusOptions: ["pending", "rejected", "accepted"],
-  // },
   name: "job",
   initialState: {
     isLoading: false,
