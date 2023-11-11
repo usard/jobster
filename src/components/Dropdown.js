@@ -1,14 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 const Dropdown = ({ list }) => {
+  const dispatch = useDispatch();
   return (
     <Wrapper>
       {list.map((item) => {
         return (
-          <li
-          // // onClick={(item) => {
-          // //   item.action;
-          // }}
+          <li className='btn'
+          onClick={()=> {console.log('list btn clicked ' ); return dispatch(item.action())}}
           >
             {item.key}
           </li>

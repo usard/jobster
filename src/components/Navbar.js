@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { RxHamburgerMenu, RxAvatar } from "react-icons/rx";
 import { BiSolidChevronDown } from "react-icons/bi";
 import Dropdown from "./Dropdown";
+import { logoutUser } from "../features/User/userSlice";
 
 const Navbar = ({ handleSidebar, toggleDropdown, isDropdownOpen }) => {
   return (
@@ -29,11 +30,11 @@ const Navbar = ({ handleSidebar, toggleDropdown, isDropdownOpen }) => {
               {isDropdownOpen && (
                 <Dropdown
                   list={[
-                    { key: "logout", action: "" },
-                    { key: "lkahkgkl", action: "" },
-                    { key: "logout", action: "" },
-                    { key: "logoutlk", action: "" },
-                    { key: "logout", action: "" },
+                    { key: "logout", action: logoutUser },
+                    // { key: "lkahkgkl", action: "" },
+                    // { key: "logout", action: "" },
+                    // { key: "logoutlk", action: "" },
+                    // { key: "logout", action: "" },
                   ]}
                 />
               )}
