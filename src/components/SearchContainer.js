@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useMemo} from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { FormRow, FormRowSelect } from "../components";
 import { handleInput } from "../features/Search/searchJobSlice";
 
 const SearchContainer = () => {
+  const [localSearchText, setLocalSearchText] = useState('')
   const search = useSelector((store) => store.search);
   const dispatch = useDispatch();
   const {
@@ -25,6 +26,23 @@ const SearchContainer = () => {
     dispatch(handleInput({ name, value }));
   };
 
+  
+  const debounceSearch = () => {
+    console.log('debounce called');
+    let timeoutID;
+    return (event) => {
+      setLocalSearchText(event.target.value)
+      let {name, value} = event.target;
+      console.log('time out id :', timeoutID)
+      clearInterval(timeoutID);
+      timeoutID = setTimeout(()=> {
+        console.log('search dispatched')
+        dispatch(handleInput({name, value}));
+      },10000)
+    }
+  }
+  const searchOptimized = useMemo(()=>  debounceSearch(),[])
+  
   return (
     <div>
       <form>
@@ -34,8 +52,8 @@ const SearchContainer = () => {
             name="searchText"
             labelText="Search"
             type="text"
-            value={searchText}
-            handleChange={handleChange}
+            value={localSearchText}
+            handleChange={searchOptimized}
           ></FormRow>
 
           <FormRowSelect

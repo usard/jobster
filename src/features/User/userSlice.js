@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import customAxios from "../../utils/axios";
 import { toast } from "react-toastify";
+import { clearJob } from "../Job/jobSlice";
+import { clearSearchValues } from "../Search/searchJobSlice";
 
 export const updateUserLocalStorage = (user) => {
   localStorage.setItem("user", JSON.stringify(user));
@@ -47,17 +49,27 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-export const logoutUser = createAsyncThunk(
-  "user/logoutUser",
-  async (thunkAPI) => {
-    try {
-      const response = await customAxios.post("/auth/logout");
-      // if(rep)
-    } catch (error) {
-      thunkAPI.rejectWithValue(error.response.data.msg);
-    }
+export const clearStore = createAsyncThunk("user/clearStore", async(_,thunkAPI)=> {
+  try {
+   thunkAPI.dispatch(logoutUser());
+   thunkAPI.dispatch(clearJob());
+   thunkAPI.dispatch(clearSearchValues());
   }
-);
+  catch(error){
+
+  }
+});
+// export const logoutUser = createAsyncThunk(
+//   "user/logoutUser",
+//   async (thunkAPI) => {
+//     try {
+//       const response = await customAxios.post("/auth/logout");
+//       // if(rep)
+//     } catch (error) {
+//       thunkAPI.rejectWithValue(error.response.data.msg);
+//     }
+//   }
+// );
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user, thunkAPI) => {
@@ -84,8 +96,11 @@ const userSlice = createSlice({
   },
 
   reducers: {
-    // login: (state) => {},
-    // register: (state) => {},
+    logoutUser: (state) => {
+      console.log('state for logout user :', state.userData)
+      state.userData = null;
+      removeUserFromLocalStorage();
+    }
   },
   // extraReducers: {
   //   [registerUser.pending]: (state) => {
@@ -131,17 +146,17 @@ const userSlice = createSlice({
         state.isLoading = false;
         console.log("login rejected");
       })
-      .addCase(logoutUser.pending, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.isLoading = false;
-        // state.user = [];
-      })
-      .addCase(logoutUser.rejected, (state) => {
-        state.isLoading = false;
-        console.log("logout rejected");
-      })
+      // .addCase(logoutUser.pending, (state) => {
+      //   state.isLoading = false;
+      // })
+      // .addCase(logoutUser.fulfilled, (state) => {
+      //   state.isLoading = false;
+      //   // state.user = [];
+      // })
+      // .addCase(logoutUser.rejected, (state) => {
+      //   state.isLoading = false;
+      //   console.log("logout rejected");
+      // })
       .addCase(updateUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -158,6 +173,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions; // this is an action creator
+export const {logoutUser} = userSlice.actions; // this is an action creator
 
 export default userSlice.reducer;

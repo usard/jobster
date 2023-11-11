@@ -77,6 +77,9 @@ const searchJobSlice = createSlice({
     hideLoading: (state) => {
       state.isLoading = false;
     },
+    clearSearchValues:(state)=> {
+      return {state,...initialState}
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -106,6 +109,6 @@ const searchJobSlice = createSlice({
   },
 });
 
-export const { handleInput, showLoading, hideLoading, changePage } =
+export const { handleInput, showLoading, hideLoading, changePage, clearSearchValues } =
   searchJobSlice.actions;
 export default searchJobSlice.reducer;
